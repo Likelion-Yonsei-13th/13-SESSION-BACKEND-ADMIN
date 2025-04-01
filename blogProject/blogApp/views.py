@@ -25,6 +25,26 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'detail.html', {'post': post})
 
+def post_edit(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.author = request.POST.get('author')
+        post.title = request.POST.get('title')
+        post.content = request.POST.get('content')
+        post.save()
+        return redirect('post_detail', post_id=post.id)
+    
+    return render(request, 'edit.html', {'post': post})
+
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+
+    return redirect('post_detail', post_id=post_id)
+
 
 
 
