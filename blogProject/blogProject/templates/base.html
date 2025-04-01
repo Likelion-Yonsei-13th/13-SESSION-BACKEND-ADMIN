@@ -18,6 +18,19 @@
             text-align: center;
         }
 
+        /* 헤더 내부를 정렬하기 위한 컨테이너 */
+        .header-container {
+            display: inline-flex; /* 혹은 flex */
+            align-items: center;
+            gap: 10px; /* 로고와 텍스트 사이 간격 */
+        }
+
+        /* 로고 이미지를 작게 표시 */
+        .logo {
+            width: 40px; /* 원하는 크기로 조정 */
+            height: auto;
+        }
+
         .container {
             max-width: 800px;
             margin: 30px auto;
@@ -142,8 +155,13 @@
     </style>
 </head>
 <body>
+    {% load static %}
     <header>
-        <h1>멋쟁이 블로그</h1>
+        <!-- 로고, 블로그 제목 -->
+        <div class="header-container">
+            <img src="{% static 'likelion_yonsei.png' %}" alt="로고" class="logo">
+            <h1>멋쟁이 블로그</h1>
+        </div>
     </header>
 
     <div class="container">
