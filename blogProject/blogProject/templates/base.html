@@ -16,18 +16,29 @@
             color: white;
             padding: 20px 0;
             text-align: center;
+            /* 헤더의 위치를 상대적으로 잡아서, 내부에 다른 요소를 오른쪽에 배치 가능 */
+            position: relative;
         }
 
-        /* 헤더 내부를 정렬하기 위한 컨테이너 */
+        /* 헤더 내부 정렬용 컨테이너 */
         .header-container {
-            display: inline-flex; /* 혹은 flex */
+            display: inline-flex;
             align-items: center;
-            gap: 10px; /* 로고와 텍스트 사이 간격 */
+            gap: 10px;
+            text-decoration: none; /* 링크 밑줄 제거 */
+            color: white;         /* 링크 글씨색 */
         }
 
-        /* 로고 이미지를 작게 표시 */
+        /* 헤더 오른쪽 영역(로그인/로그아웃 등) */
+        .header-right {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
         .logo {
-            width: 40px; /* 원하는 크기로 조정 */
+            width: 40px;
             height: auto;
         }
 
@@ -152,15 +163,34 @@
             border-top: 1px solid #ddd;
             margin: 30px 0;
         }
+        .header-container {
+            background-color: transparent !important;
+            text-decoration: none;
+            color: inherit;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
     {% load static %}
     <header>
-        <!-- 로고, 블로그 제목 -->
-        <div class="header-container">
+        <!-- header-container를 클릭하면 home으로 이동 -->
+        <a href="{% url 'home' %}" class="header-container">
             <img src="{% static 'likelion_yonsei.png' %}" alt="로고" class="logo">
             <h1>멋쟁이 블로그</h1>
+        </a>
+        
+        <!-- 로그인/로그아웃 상태에 따라 버튼 표시 -->
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                안녕하세요, {{ user.username }}님
+                &nbsp;&nbsp;
+                <a href="{% url 'logout' %}">로그아웃</a>
+            {% else %}
+                <a href="{% url 'login' %}">로그인</a>
+                &nbsp;&nbsp;
+                <a href="{% url 'signup' %}">회원가입</a>
+            {% endif %}
         </div>
     </header>
 

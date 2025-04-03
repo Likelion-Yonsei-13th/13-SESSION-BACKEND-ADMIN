@@ -1,19 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a href="{% url 'post_create' %}">+ 새 글 작성</a>
-    <hr>
-    {% for post in posts %}
-        <div class="post">
-            <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: initial; background-color: initial;">
-                <h2>{{ post.title }}</h2>
-                <p>작성자: {{ post.author }}</p>
-                <p>작성일: {{ post.created_at }}</p>
-            </a>
-            <a class="edit-button" href="{% url 'post_edit' post.id %}">수정하기</a>
-        </div>
-    {% empty %}
-        <p class="no-posts">작성된 글이 없습니다.</p>
-    {% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}">+ 새 글 작성</a>
+        <hr>
+        {% for post in posts %}
+            <div class="post">
+                <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: initial; background-color: initial;">
+                    <h2>{{ post.title }}</h2>
+                    <p>작성자: {{ post.author }}</p>
+                    <p>작성일: {{ post.created_at }}</p>
+                </a>
+                <a class="edit-button" href="{% url 'post_edit' post.id %}">수정하기</a>
+            </div>
+        {% empty %}
+            <p class="no-posts">작성된 글이 없습니다.</p>
+        {% endfor %}
+    {% else %}
+        {% for post in posts %}
+            <div class="post">
+                <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: initial; background-color: initial;">
+                    <h2>{{ post.title }}</h2>
+                    <p>작성자: {{ post.author }}</p>
+                    <p>작성일: {{ post.created_at }}</p>
+                </a>
+                <a class="edit-button" href="{% url 'post_edit' post.id %}">수정하기</a>
+            </div>
+        {% empty %}
+            <p class="no-posts">작성된 글이 없습니다.</p>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}
+
+
 

@@ -12,14 +12,17 @@ def post_create(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
         
-        Post.objects.create(author=author, title=title, content=content)
+        Post.objects.create(user = request.user, author=author, title=title, content=content)
         return redirect('home')
 
     return render(request, 'create.html')
 
 def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'home.html', {'posts' : posts})
+    if request.user.is_authenticated:
+        posts = Post.objects.filter(user=request.user)
+    else:
+        posts = Post.objects.none()
+    return render(request, 'home.html', {'posts': posts})
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
