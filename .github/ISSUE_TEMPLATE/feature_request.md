@@ -3,7 +3,7 @@ name: ✨ Feature Request
 about: 새로운 기능을 제안하세요.
 title: "[FEAT] <기능 요약>"
 labels: enhancement
-assignees: ''
+assignees: ' '
 ---
 
 <!-- 이슈이름은 '[컨벤션] 기능이름' 으로 통일해주세요.
